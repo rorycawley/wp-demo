@@ -1,20 +1,23 @@
-import React, { useState, Dispatch } from 'react';
+import React, { useState, Dispatch, useMemo } from 'react';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core';
+import theme from '../../../ui/theme';
 import TextField from '@material-ui/core/TextField';
 
 import {
   DEFAULT_SUBREDDIT,
   DEFAULT_SUBREDDITS_LIST,
 } from '../../../api/reddit';
-import ErrorFound from '../../ErrorFound';
+
+import ErrorFound from '../ErrorFound';
 import { searchSubredditsURL } from '../../../api/reddit';
 import { SubredditData, SubredditListData } from '../../../api/reddit';
 import useDataAPI from '../../../api/common';
 
-import theme from '../../../ui/theme';
-import { makeStyles } from '@material-ui/core';
+const getSubredditNames = (subreddits: SubredditData[]) =>
+  subreddits.map(subreddit => subreddit.name);
 
 const useStyles = makeStyles(theme => ({
   searchBar: {
@@ -48,11 +51,11 @@ const SubredditSearchBar: React.FC<SubredditSearchBarProps> = ({
     }
 
     // turn the data into a list that the autocomplete dropdown can consume
-    const subredditsData = data as SubredditListData;
-    const options = subredditsData.subreddits.map(
-      (subreddit: SubredditData) => subreddit.name
-    );
-    const loading = (open && options.length === 0) || isLoading;
+    const subreddits = (data as SubredditListData).subreddits;
+
+    const dropdownSubreddits: string[] = getSubredditNames(subreddits);
+
+    const loading = (open && dropdownSubreddits.length === 0) || isLoading;
 
     // gets called when a key is pressed, obtains a list subreddit matches
     const handleInputChange = (
@@ -89,7 +92,7 @@ const SubredditSearchBar: React.FC<SubredditSearchBarProps> = ({
         onClose={() => {
           setOpen(false);
         }}
-        options={options}
+        options={dropdownSubreddits}
         loading={loading}
         value={query}
         clearOnBlur

@@ -1,13 +1,14 @@
 import React from 'react';
 
-import ErrorFound from '../../ErrorFound';
+import ErrorFound from '../ErrorFound';
 import Loading from './Loading';
 import useDataAPI from '../../../api/common';
+
 import {
   DEFAULT_POSTS_LIST,
-  subredditPostsUrl,
-  SubredditPostListData,
   SubredditPostData,
+  SubredditPostListData,
+  subredditPostsUrl,
 } from '../../../api/reddit';
 
 type SubredditPostsProps = {

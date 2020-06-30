@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
 
-import ErrorFound from '../../src/components/ErrorFound';
+import ErrorFound from '../../src/components/Root/ErrorFound';
 
 let documentBody: RenderResult;
 

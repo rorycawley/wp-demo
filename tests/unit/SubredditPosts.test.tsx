@@ -20,6 +20,10 @@ describe('<SubredditPosts />', () => {
   afterAll(() => server.close());
   afterEach(() => server.resetHandlers());
 
+  beforeEach(() => {
+    documentBody = render(<SubredditPosts />);
+  });
+
   it('renders message when posts are fetched successfully', async () => {
     documentBody = render(<SubredditPosts />);
 

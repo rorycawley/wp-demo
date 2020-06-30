@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import {
   CssBaseline,
+  Grid,
   makeStyles,
   ThemeProvider,
-  Grid,
   Typography,
 } from '@material-ui/core';
 
-import theme from '../../ui/theme';
 import Header from './Header';
-import SubredditSearchBar from './SubredditSearchBar';
+import theme from '../../ui/theme';
 import SubredditPosts from './SubredditPosts';
+import SubredditSearchBar from './SubredditSearchBar';
 import { subredditPostsUrl } from '../../api/reddit';
 
 const useStyles = makeStyles(theme => ({
@@ -36,6 +36,7 @@ const Root: React.FC<{}> = () => {
     // fetch the posts of the newly selected subreddit
     //doFetch(subredditPostsUrl(selectedSubreddit));
   };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />

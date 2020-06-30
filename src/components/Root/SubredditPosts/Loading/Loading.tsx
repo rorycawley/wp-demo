@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { memo } from 'react';
+
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Skeleton from '@material-ui/lab/Skeleton';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -10,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Loading: React.FC<{}> = () => {
+const Loading = memo(function Loading() {
   const classes = useStyles();
 
   return (
@@ -20,5 +21,6 @@ const Loading: React.FC<{}> = () => {
       <Skeleton animation='wave' />
     </div>
   );
-};
+});
+
 export default Loading;
