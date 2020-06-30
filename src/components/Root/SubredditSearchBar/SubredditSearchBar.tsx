@@ -1,41 +1,40 @@
 // import fetch from "cross-fetch";
 import React, { useState } from 'react';
-import TextField from '@material-ui/core/TextField';
+
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import useDataAPI from '../../../api/common';
+import TextField from '@material-ui/core/TextField';
 
+import {
+  DEFAULT_SUBREDDIT,
+  DEFAULT_SUBREDDITS_LIST,
+} from '../../../api/reddit';
+import ErrorFound from '../../ErrorFound';
 import { searchSubredditsURL } from '../../../api/reddit';
-
-const DEFAULT_SUBREDDITS_LIST = { subreddits: [] };
-
-interface SubredditData {
-  name: string;
-}
-
-interface SubredditListData {
-  subreddits: Array<SubredditData>;
-}
+import { SubredditData, SubredditListData } from '../../../api/reddit';
+import useDataAPI from '../../../api/common';
 
 const SubredditSearchBar = () => {
   const [query, setQuery] = useState('');
 
   const [{ data, isLoading, isError }, doFetch] = useDataAPI(
-    searchSubredditsURL(''),
+    searchSubredditsURL(DEFAULT_SUBREDDIT),
     DEFAULT_SUBREDDITS_LIST
   );
 
   const [open, setOpen] = useState(false);
-  // const [options, setOptions] = useState<CountryType[]>([]);
-
-  // turn the data into a list that the autocomplete dropdown can consume
-  const subredditsData = data as SubredditListData;
 
   try {
+    if (isError) {
+      throw new Error('Error occurred during search');
+    }
+
+    // turn the data into a list that the autocomplete dropdown can consume
+    const subredditsData = data as SubredditListData;
     const options = subredditsData.subreddits.map(
       (subreddit: SubredditData) => subreddit.name
     );
-    const loading = open && options.length === 0;
+    const loading = (open && options.length === 0) || isLoading;
 
     // gets called when a key is pressed, obtains a list subreddit matches
     const handleInputChange = (
@@ -62,7 +61,7 @@ const SubredditSearchBar = () => {
         id='wp-autocomplete'
         onInputChange={handleInputChange}
         onChange={(event: any, newValue: string | null) => {
-          setValue(newValue);
+          newValue ? setQuery(newValue) : setQuery('');
         }}
         open={open}
         onOpen={() => {
@@ -101,7 +100,7 @@ const SubredditSearchBar = () => {
     // https://dev.to/bil/using-abortcontroller-with-react-hooks-and-typescript-to-cancel-window-fetch-requests-1md4
     // https://dev.to/pallymore/testing-api-request-hooks-with-jest-sinon-and-react-testing-library-3ncf
     console.error('Error loading data' + error.message);
-    return <div>Error</div>;
+    return <ErrorFound />;
   }
 };
 export default SubredditSearchBar;

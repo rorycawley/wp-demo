@@ -21,7 +21,8 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "watch": "parcel --port=3000 src/index.html"
+    "watch": "parcel --port=3000 src/index.html --out-dir dist/debug",
+    "build": "parcel build src/index.html  --no-source-maps --out-dir   dist/release --public-url ./"
   },
   "dependencies": {
     "@material-ui/core": "^4.10.2",

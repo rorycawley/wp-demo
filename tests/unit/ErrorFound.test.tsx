@@ -1,13 +1,13 @@
 import * as React from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
 
-import Root from '../../src/components/NotFound';
+import ErrorFound from '../../src/components/ErrorFound';
 
 let documentBody: RenderResult;
 
-describe('<NotFound />', () => {
+describe('<ErrorFound />', () => {
   beforeEach(() => {
-    documentBody = render(<Root />);
+    documentBody = render(<ErrorFound />);
   });
 
   it('shows not found error message', () => {
@@ -19,4 +19,6 @@ describe('<NotFound />', () => {
 
     // screen.debug();
   });
+
+  // TODO: test when there is a network problem, ensure error shows up
 });
