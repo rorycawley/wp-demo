@@ -12,6 +12,6 @@ describe('<Header />', () => {
 
   it('shows the header message', () => {
     expect(documentBody.getByText('WP Reddit Demo')).toBeInTheDocument();
-    //screen.debug();
+    // screen.debug();
   });
 });
