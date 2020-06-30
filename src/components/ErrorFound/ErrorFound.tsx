@@ -1,12 +1,11 @@
 import React from 'react';
 
-const ErrorFound: React.FC<{}> = () => {
-  return (
-    <div>
-      We apologize for the inconvenience but there's been a temporary problem
-      that will be fixed shortly.
-    </div>
-  );
+type ErrorMessage = {
+  error: string;
+};
+
+const ErrorFound: React.FC<ErrorMessage> = ({ error }) => {
+  return <div>{error}</div>;
 };
 
 export default ErrorFound;

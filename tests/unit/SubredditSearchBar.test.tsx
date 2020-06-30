@@ -7,7 +7,9 @@ let documentBody: RenderResult;
 
 describe('<SubredditSearchBar />', () => {
   beforeEach(() => {
-    documentBody = render(<SubredditSearchBar />);
+    documentBody = render(
+      <SubredditSearchBar setSelectedSubreddit={s => {}} />
+    );
   });
 
   it('shows the SubredditSearchBar has rendered', () => {

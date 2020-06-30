@@ -7,7 +7,9 @@ let documentBody: RenderResult;
 
 describe('<ErrorFound />', () => {
   beforeEach(() => {
-    documentBody = render(<ErrorFound />);
+    documentBody = render(
+      <ErrorFound error="We apologize for the inconvenience but there's been a temporary problem that will be fixed shortly." />
+    );
   });
 
   it('shows not found error message', () => {

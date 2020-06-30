@@ -1,5 +1,5 @@
 // import fetch from "cross-fetch";
-import React, { useState } from 'react';
+import React, { useState, Dispatch } from 'react';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -14,7 +14,26 @@ import { searchSubredditsURL } from '../../../api/reddit';
 import { SubredditData, SubredditListData } from '../../../api/reddit';
 import useDataAPI from '../../../api/common';
 
-const SubredditSearchBar = () => {
+import theme from '../../../ui/theme';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles(theme => ({
+  searchBar: {
+    paddingLeft: '35px',
+    paddingRight: '35px',
+    paddingBottom: '10px',
+  },
+}));
+
+type SubredditSearchBarProps = {
+  setSelectedSubreddit: Dispatch<React.SetStateAction<string>>;
+};
+
+const SubredditSearchBar: React.FC<SubredditSearchBarProps> = ({
+  setSelectedSubreddit,
+}) => {
+  const classes = useStyles();
+
   const [query, setQuery] = useState('');
 
   const [{ data, isLoading, isError }, doFetch] = useDataAPI(
@@ -42,27 +61,28 @@ const SubredditSearchBar = () => {
       value: string,
       _reason: string
     ) => {
-      console.log('search for subreddits that match: ' + value);
+      // console.log('search for subreddits that match: ' + value);
       setQuery(value);
       doFetch(searchSubredditsURL(query));
     };
 
     // this is called once we select a subredding from the list
-    const setValue = (selectedSubreddit: string | null) => {
-      if (selectedSubreddit) {
-        //     setSubredditSearch(selectedSubreddit);
-        // TODO do something to pass the value along to the next bit
-        console.log('this is the chosen subreddit: ' + selectedSubreddit);
-      }
+    const handleSelectedSubreddit = (
+      _event: any,
+      selectedSubreddit: string | null
+    ) => {
+      selectedSubreddit
+        ? setSelectedSubreddit(selectedSubreddit)
+        : setSelectedSubreddit('');
     };
+
     console.log(options);
     return (
       <Autocomplete
         id='wp-autocomplete'
+        className={classes.searchBar}
         onInputChange={handleInputChange}
-        onChange={(event: any, newValue: string | null) => {
-          newValue ? setQuery(newValue) : setQuery('');
-        }}
+        onChange={handleSelectedSubreddit}
         open={open}
         onOpen={() => {
           setOpen(true);
@@ -100,7 +120,9 @@ const SubredditSearchBar = () => {
     // https://dev.to/bil/using-abortcontroller-with-react-hooks-and-typescript-to-cancel-window-fetch-requests-1md4
     // https://dev.to/pallymore/testing-api-request-hooks-with-jest-sinon-and-react-testing-library-3ncf
     console.error('Error loading data' + error.message);
-    return <ErrorFound />;
+    return (
+      <ErrorFound error="We apologize for the inconvenience but there's been a temporary problem that will be fixed shortly." />
+    );
   }
 };
 export default SubredditSearchBar;
