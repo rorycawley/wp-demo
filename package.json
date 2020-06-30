@@ -1,0 +1,37 @@
+{
+  "name": "wp-reddit",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.0",
+    "@testing-library/react": "^10.4.3",
+    "@types/jest": "^26.0.3",
+    "@types/react": "^16.9.41",
+    "@types/react-dom": "^16.9.8",
+    "@types/testing-library__jest-dom": "^5.9.1",
+    "@types/testing-library__react": "^10.2.0",
+    "@types/typescript": "^2.0.0",
+    "@types/whatwg-fetch": "^0.0.33",
+    "jest": "^26.1.0",
+    "parcel-bundler": "^1.12.4",
+    "ts-jest": "^26.1.1",
+    "typescript": "^3.9.5"
+  },
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "watch": "parcel --port=3000 src/index.html"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.10.2",
+    "@material-ui/icons": "^4.9.1",
+    "@material-ui/lab": "^4.0.0-alpha.56",
+    "@material-ui/styles": "^4.10.0",
+    "components": "^0.1.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "src": "^1.1.2",
+    "whatwg-fetch": "^3.1.0"
+  }
+}
