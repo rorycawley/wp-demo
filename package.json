@@ -14,6 +14,8 @@
     "@types/typescript": "^2.0.0",
     "@types/whatwg-fetch": "^0.0.33",
     "jest": "^26.1.0",
+    "jest-environment-jsdom-sixteen": "^1.0.3",
+    "msw": "^0.19.5",
     "parcel-bundler": "^1.12.4",
     "ts-jest": "^26.1.1",
     "typescript": "^3.9.5"

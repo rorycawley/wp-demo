@@ -1,23 +1,7 @@
 import React from 'react';
-// import { Toolbar, AppBar, Typography } from '@material-ui/core';
-// import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-// import RedditIcon from '@material-ui/icons/Reddit';
 
-// const redditOrange = '#ff4500';
-
-// const useStyles = makeStyles((theme: Theme) =>
-//   createStyles({
-//     typographyStyles: {
-//       flex: 1,
-//       fontSize: 20,
-//       fontWeight: 500,
-//     },
-//     iconStyle: {
-//       color: `${redditOrange}`,
-//     },
-//   })
-// );
 import ErrorFound from '../../ErrorFound';
+import Loading from './Loading';
 import useDataAPI from '../../../api/common';
 import {
   DEFAULT_POSTS_LIST,
@@ -27,28 +11,37 @@ import {
 } from '../../../api/reddit';
 
 type SubredditPostsProps = {
-  selectedSubreddit: string;
+  selectedSubreddit?: string;
 };
 
 const SubredditPosts: React.FC<SubredditPostsProps> = ({
   selectedSubreddit,
 }) => {
   // const classes = useStyles();
-  console.log('SubredditPosts called');
+  console.log('SubredditPosts called: ' + subredditPostsUrl(selectedSubreddit));
   try {
     const [{ data, isLoading, isError }, doFetch] = useDataAPI(
       subredditPostsUrl(selectedSubreddit),
       DEFAULT_POSTS_LIST
     );
 
-    const postData = data as SubredditPostListData;
+    if (isError) {
+      throw new Error('There was a error while getting the posts data');
+    }
 
+    const postData = data as SubredditPostListData;
+    const posts: SubredditPostData[] = postData.data.children;
+    console.log(posts.map(p => p.data.title));
     return (
-      <div>
-        {postData.data.children.map(p => (
-          <div>p.data.title</div>
-        ))}
-      </div>
+      <>
+        {isLoading ? (
+          <Loading />
+        ) : (
+          postData.data.children.map(p => (
+            <div key={p.data.name}>{p.data.title}</div>
+          ))
+        )}
+      </>
     );
     // return (
     //   <>
@@ -64,7 +57,7 @@ const SubredditPosts: React.FC<SubredditPostsProps> = ({
     // TODO test this scenario
     // https://dev.to/bil/using-abortcontroller-with-react-hooks-and-typescript-to-cancel-window-fetch-requests-1md4
     // https://dev.to/pallymore/testing-api-request-hooks-with-jest-sinon-and-react-testing-library-3ncf
-    console.error('Error loading data' + error.message);
+    // console.error('Error loading data' + error.message);
     return (
       <ErrorFound error="We apologize for the inconvenience but there's been a temporary problem that will be fixed shortly." />
     );

@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 type SubredditSearchBarProps = {
-  setSelectedSubreddit: Dispatch<React.SetStateAction<string>>;
+  setSelectedSubreddit: (subreddit: string) => void;
 };
 
 const SubredditSearchBar: React.FC<SubredditSearchBarProps> = ({
@@ -75,7 +75,7 @@ const SubredditSearchBar: React.FC<SubredditSearchBarProps> = ({
         : setSelectedSubreddit('');
     };
 
-    console.log(options);
+    // console.log(options);
     return (
       <Autocomplete
         id='wp-autocomplete'
@@ -118,7 +118,7 @@ const SubredditSearchBar: React.FC<SubredditSearchBarProps> = ({
     // TODO test this scenario
     // https://dev.to/bil/using-abortcontroller-with-react-hooks-and-typescript-to-cancel-window-fetch-requests-1md4
     // https://dev.to/pallymore/testing-api-request-hooks-with-jest-sinon-and-react-testing-library-3ncf
-    console.error('Error loading data' + error.message);
+    // console.error('Error loading data' + error.message);
     return (
       <ErrorFound error="We apologize for the inconvenience but there's been a temporary problem that will be fixed shortly." />
     );

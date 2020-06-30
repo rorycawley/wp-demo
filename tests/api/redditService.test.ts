@@ -17,13 +17,7 @@ describe('Reddit service', () => {
       ['__________', '__________'],
       ['!@#!@$!@$!@$#!$!!%!%!%!!%^^%*$*', ''],
     ];
-    console.log('this is the test: ');
-    console.log(cleanSubredditName('    @#$@#%@$@#%@$#@$@') === '');
-    console.log(
-      testDataForcleanSubredditName.map(
-        test => cleanSubredditName(test[0]) === test[1]
-      )
-    );
+
     expect(
       testDataForcleanSubredditName
         .map(test => cleanSubredditName(test[0]) === test[1])

@@ -13,10 +13,13 @@ interface State {
 }
 
 const dataFetchReducer = (state: State, action: Action) => {
+  console.log(action.type);
+
   switch (action.type) {
     case 'FETCH_INIT':
       return { ...state, isLoading: true, isError: false };
     case 'FETCH_SUCCESS':
+      console.log(action.payload);
       return {
         ...state,
         isLoading: false,
@@ -53,7 +56,7 @@ const useDataAPI = (
     const fetchData = async () => {
       dispatch({ type: 'FETCH_INIT' });
 
-      console.log(`🚀REQUEST TRIGGERED TO ${url}`);
+      console.log(`🚀URL: ${url}`);
       try {
         const response = await window.fetch(url, {
           signal: abortController.signal,

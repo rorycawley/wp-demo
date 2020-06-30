@@ -1,5 +1,10 @@
 import React from 'react';
-import { render, RenderResult, screen } from '@testing-library/react';
+import {
+  render,
+  RenderResult,
+  screen,
+  fireEvent,
+} from '@testing-library/react';
 
 import SubredditSearchBar from '../../src/components/Root/SubredditSearchBar';
 

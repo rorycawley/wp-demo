@@ -11,6 +11,7 @@ import theme from '../../ui/theme';
 import Header from './Header';
 import SubredditSearchBar from './SubredditSearchBar';
 import SubredditPosts from './SubredditPosts';
+import { subredditPostsUrl } from '../../api/reddit';
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -29,6 +30,12 @@ const Root: React.FC<{}> = () => {
   const classes = useStyles();
   const [selectedSubreddit, setSelectedSubreddit] = useState('');
 
+  const handleSubredditChange = (subreddit: string) => {
+    setSelectedSubreddit(subreddit);
+
+    // fetch the posts of the newly selected subreddit
+    //doFetch(subredditPostsUrl(selectedSubreddit));
+  };
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -39,15 +46,16 @@ const Root: React.FC<{}> = () => {
         <Grid item container>
           <Grid item xs={false} sm={2} />
           <Grid item xs={12} sm={8} className={classes.content}>
-            <SubredditSearchBar setSelectedSubreddit={setSelectedSubreddit} />
-            {selectedSubreddit && (
-              <Typography className={classes.heading}>
-                Newest posts from <strong>/r/{selectedSubreddit}</strong>
-              </Typography>
-            )}
+            <SubredditSearchBar setSelectedSubreddit={handleSubredditChange} />
+            <Typography className={classes.heading}>
+              Newest posts from
+              <strong>
+                /r/{selectedSubreddit ? selectedSubreddit : 'all'}
+              </strong>
+            </Typography>
             "Content"
             {selectedSubreddit}
-            {/* <SubredditPosts selectedSubreddit={selectedSubreddit} /> */}
+            <SubredditPosts selectedSubreddit={selectedSubreddit} />
           </Grid>
           <Grid item xs={false} sm={2} />
         </Grid>
