@@ -11,9 +11,9 @@ describe('<SubredditSearchBar />', () => {
   });
 
   it('shows the SubredditSearchBar has rendered', () => {
-    expect(
-      documentBody.getByPlaceholderText('Search for subreddits...')
-    ).toBeInTheDocument();
+    // expect(documentBody.getByText(/Search/)).toBeInTheDocument();
+    // expect(screen.getByText('Search')).toBeInTheDocument();
+    expect(screen.getByRole('textbox')).toBeInTheDocument();
 
     // screen.debug();
   });

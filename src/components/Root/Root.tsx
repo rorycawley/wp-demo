@@ -8,6 +8,7 @@ import {
 
 import theme from '../../ui/theme';
 import Header from './Header';
+import SubredditSearchBar from './SubredditSearchBar';
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -35,7 +36,7 @@ const Root: React.FC<{}> = () => {
         <Grid item container>
           <Grid item xs={false} sm={2} />
           <Grid item xs={12} sm={8} className={classes.content}>
-            "Search"
+            <SubredditSearchBar />
             <hr />
             "Content"
           </Grid>
