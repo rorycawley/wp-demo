@@ -10,8 +10,8 @@ describe('<Root />', () => {
     documentBody = render(<Root />);
   });
 
-  it('shows not found message', () => {
-    expect(documentBody.getByText('Root')).toBeInTheDocument();
+  it('shows to root', () => {
+    expect(documentBody.getByText(/WP Reddit Demo/i)).toBeInTheDocument();
 
     // screen.debug();
   });
