@@ -5,12 +5,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import useDataAPI from '../../../api/common';
 
-interface CountryType {
-  name: string;
-}
-
-const searchSubredditsURL = (search: string = '') =>
-  `https://www.reddit.com/api/subreddit_autocomplete.json?query=${search}&include_over_18=0&include_profiles=0`;
+import { searchSubredditsURL } from '../../../api/reddit';
 
 const DEFAULT_SUBREDDITS_LIST = { subreddits: [] };
 
