@@ -13,10 +13,6 @@ describe('<Root />', () => {
   it('shows not found message', () => {
     expect(documentBody.getByText('Root')).toBeInTheDocument();
 
-    screen.debug();
-  });
-
-  it('runs the first test', () => {
-    expect(true).toBe(true);
+    // screen.debug();
   });
 });
