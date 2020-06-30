@@ -14,7 +14,7 @@ describe('<ErrorFound />', () => {
 
   it('shows not found error message', () => {
     expect(
-      documentBody.getByText(
+      screen.getByText(
         "We apologize for the inconvenience but there's been a temporary problem that will be fixed shortly."
       )
     ).toBeInTheDocument();

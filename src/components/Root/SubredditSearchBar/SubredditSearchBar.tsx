@@ -1,4 +1,3 @@
-// import fetch from "cross-fetch";
 import React, { useState, Dispatch } from 'react';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';

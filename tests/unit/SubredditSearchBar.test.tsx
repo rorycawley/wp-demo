@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
 
 import SubredditSearchBar from '../../src/components/Root/SubredditSearchBar';

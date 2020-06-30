@@ -10,6 +10,7 @@ import {
 import theme from '../../ui/theme';
 import Header from './Header';
 import SubredditSearchBar from './SubredditSearchBar';
+import SubredditPosts from './SubredditPosts';
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -46,6 +47,7 @@ const Root: React.FC<{}> = () => {
             )}
             "Content"
             {selectedSubreddit}
+            {/* <SubredditPosts selectedSubreddit={selectedSubreddit} /> */}
           </Grid>
           <Grid item xs={false} sm={2} />
         </Grid>

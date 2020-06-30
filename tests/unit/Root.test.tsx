@@ -11,7 +11,7 @@ describe('<Root />', () => {
   });
 
   it('shows to root', () => {
-    expect(documentBody.getByText(/WP Reddit Demo/i)).toBeInTheDocument();
+    expect(screen.getByText(/WP Reddit Demo/i)).toBeInTheDocument();
 
     // screen.debug();
   });
