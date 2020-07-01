@@ -1,5 +1,5 @@
 import 'whatwg-fetch';
-import React, { useState, useReducer, useEffect } from 'react';
+import React, { useState, useReducer, useEffect, Dispatch } from 'react';
 
 type Action =
   | { type: 'FETCH_INIT' }
@@ -13,13 +13,10 @@ interface State {
 }
 
 const dataFetchReducer = (state: State, action: Action) => {
-  console.log(action.type);
-
   switch (action.type) {
     case 'FETCH_INIT':
       return { ...state, isLoading: true, isError: false };
     case 'FETCH_SUCCESS':
-      console.log(action.payload);
       return {
         ...state,
         isLoading: false,
@@ -42,9 +39,9 @@ const useDataAPI = (
     isLoading: boolean;
     isError: boolean;
   },
-  React.Dispatch<React.SetStateAction<string>>
+  Dispatch<React.SetStateAction<string>>
 ] => {
-  const [url, setUrl] = useState<string>(initialURL);
+  const [url, setUrl] = useState(initialURL);
   const [state, dispatch] = useReducer(dataFetchReducer, {
     isLoading: false,
     isError: false,
@@ -56,8 +53,8 @@ const useDataAPI = (
     const fetchData = async () => {
       dispatch({ type: 'FETCH_INIT' });
 
-      console.log(`🚀URL: ${url}`);
       try {
+        console.info(`🚀fetching: ${url}`);
         const response = await window.fetch(url, {
           signal: abortController.signal,
         });

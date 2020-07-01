@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+
+import { useSubreddit } from '../SubredditContext';
 
 import ErrorFound from '../ErrorFound';
 import Loading from './Loading';
@@ -10,37 +12,75 @@ import {
   SubredditPostListData,
   subredditPostsUrl,
 } from '../../../api/reddit';
+import { Typography, Grid } from '@material-ui/core';
+import makeStyles from '@material-ui/styles/makeStyles';
+import Post from './Post';
 
-type SubredditPostsProps = {
-  selectedSubreddit?: string;
-};
+const useStyles = makeStyles(theme => ({
+  content: {
+    padding: '24px',
+  },
+  typographyStyles: {
+    flex: 1,
+  },
+  heading: {
+    paddingLeft: '0px',
+    paddingTop: '20px',
+  },
+  post: {
+    padding: '24px',
+  },
+}));
 
-const SubredditPosts: React.FC<SubredditPostsProps> = ({
-  selectedSubreddit,
-}) => {
-  // const classes = useStyles();
-  console.log('SubredditPosts called: ' + subredditPostsUrl(selectedSubreddit));
+const xs = 12;
+const sm = 6;
+const md = 6;
+const lg = 4;
+const xl = 3;
+
+const SubredditPosts: React.FC<{}> = () => {
+  const classes = useStyles();
+  const { subreddit, setSubreddit } = useSubreddit()!;
   try {
     const [{ data, isLoading, isError }, doFetch] = useDataAPI(
-      subredditPostsUrl(selectedSubreddit),
+      subredditPostsUrl(subreddit),
       DEFAULT_POSTS_LIST
     );
+
+    useEffect(() => {
+      // when there's a new subreddit get new posts
+      doFetch(subredditPostsUrl(subreddit));
+    }, [subreddit]);
+
+    // const classes = useStyles();
 
     if (isError) {
       throw new Error('There was a error while getting the posts data');
     }
 
-    const postData = data as SubredditPostListData;
-    const posts: SubredditPostData[] = postData.data.children;
-    console.log(posts.map(p => p.data.title));
+    // turn the data into a list of posts
+    const posts: SubredditPostData[] = (data as SubredditPostListData).data
+      .children;
+
+    // console.log(posts.map(p => p.data.title));
     return (
       <>
+        <Typography className={classes.heading}>
+          Newest posts from
+          <strong> /r/{subreddit ? subreddit : 'all'}</strong>
+        </Typography>
         {isLoading ? (
           <Loading />
         ) : (
-          postData.data.children.map(p => (
-            <div key={p.data.name}>{p.data.title}</div>
-          ))
+          <Grid container spacing={2} className={classes.post}>
+            {/* <Post post={posts[0]} /> */}
+              <div>placeholder</div>
+            {/* posts.map(({data}) => (
+            <Grid item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
+              <Post post={data} />
+            </Grid>
+            )) */}
+          </Grid>
         )}
       </>
     );

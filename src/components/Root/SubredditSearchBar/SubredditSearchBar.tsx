@@ -1,10 +1,12 @@
-import React, { useState, Dispatch, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import { useSubreddit } from '../SubredditContext';
 
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core';
-import theme from '../../../ui/theme';
 import TextField from '@material-ui/core/TextField';
+import useDebounce from '../../../api/common/useDebounce';
 
 import {
   DEFAULT_SUBREDDIT,
@@ -27,22 +29,14 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-type SubredditSearchBarProps = {
-  setSelectedSubreddit: (subreddit: string) => void;
-};
-
-const SubredditSearchBar: React.FC<SubredditSearchBarProps> = ({
-  setSelectedSubreddit,
-}) => {
+const SubredditSearchBar: React.FC<{}> = () => {
   const classes = useStyles();
-
-  const [query, setQuery] = useState('');
-
+  const { subreddit, setSubreddit } = useSubreddit()!;
+  const [searchQuery, setSearchQuery] = useState('');
   const [{ data, isLoading, isError }, doFetch] = useDataAPI(
     searchSubredditsURL(DEFAULT_SUBREDDIT),
     DEFAULT_SUBREDDITS_LIST
   );
-
   const [open, setOpen] = useState(false);
 
   try {
@@ -52,33 +46,37 @@ const SubredditSearchBar: React.FC<SubredditSearchBarProps> = ({
 
     // turn the data into a list that the autocomplete dropdown can consume
     const subreddits = (data as SubredditListData).subreddits;
-
     const dropdownSubreddits: string[] = getSubredditNames(subreddits);
 
     const loading = (open && dropdownSubreddits.length === 0) || isLoading;
+    const debouncedSearchTerm = useDebounce(searchQuery, 100);
 
-    // gets called when a key is pressed, obtains a list subreddit matches
+    // keypress handler
     const handleInputChange = (
       _event: object,
-      value: string,
+      typedInSubreddit: string,
       _reason: string
     ) => {
-      // console.log('search for subreddits that match: ' + value);
-      setQuery(value);
-      doFetch(searchSubredditsURL(query));
+      setSearchQuery(typedInSubreddit);
+
+      // limit the continuous API calls made by using debounce
+      if (debouncedSearchTerm) {
+        // find a list of subreddits that match what we've typed
+        doFetch(searchSubredditsURL(typedInSubreddit));
+      }
     };
 
-    // this is called once we select a subredding from the list
+    // select a subreddit
     const handleSelectedSubreddit = (
       _event: any,
       selectedSubreddit: string | null
     ) => {
-      selectedSubreddit
-        ? setSelectedSubreddit(selectedSubreddit)
-        : setSelectedSubreddit('');
+      if (selectedSubreddit) {
+        setSubreddit(selectedSubreddit);
+        setSearchQuery(selectedSubreddit);
+      }
     };
 
-    // console.log(options);
     return (
       <Autocomplete
         id='wp-autocomplete'
@@ -94,7 +92,7 @@ const SubredditSearchBar: React.FC<SubredditSearchBarProps> = ({
         }}
         options={dropdownSubreddits}
         loading={loading}
-        value={query}
+        value={searchQuery}
         clearOnBlur
         renderInput={params => (
           <TextField
@@ -118,10 +116,6 @@ const SubredditSearchBar: React.FC<SubredditSearchBarProps> = ({
       />
     );
   } catch (error) {
-    // TODO test this scenario
-    // https://dev.to/bil/using-abortcontroller-with-react-hooks-and-typescript-to-cancel-window-fetch-requests-1md4
-    // https://dev.to/pallymore/testing-api-request-hooks-with-jest-sinon-and-react-testing-library-3ncf
-    // console.error('Error loading data' + error.message);
     return (
       <ErrorFound error="We apologize for the inconvenience but there's been a temporary problem that will be fixed shortly." />
     );
