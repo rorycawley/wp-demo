@@ -4,7 +4,7 @@ import {
   subredditPostsUrl,
 } from '../../src/api/reddit';
 import normalizeSubredditPost from '../../src/api/reddit/normalizeSubredditPost';
-import {postJson1,postJson2,postJson3,postJson4} from '../testData/posts'
+import { postJson1, postJson2, postJson3, postJson4 } from '../testData/posts';
 
 describe('Reddit service', () => {
   it('cleanSubredditName', () => {
@@ -77,7 +77,7 @@ describe('Reddit service', () => {
     );
     expect(np.link_flair_text).toEqual('');
 
-    console.log(np);
+    // console.log(np);
   });
 
   it('processes the values in a post 2', () => {
@@ -95,7 +95,7 @@ describe('Reddit service', () => {
     expect(np.url).toEqual('https://youtu.be/V3UHoLLOXJQ');
     expect(np.link_flair_text).toEqual('');
 
-    console.log(np);
+    // console.log(np);
   });
 
   it('processes the values in a post 3', () => {
@@ -117,7 +117,7 @@ describe('Reddit service', () => {
     );
     expect(np.link_flair_text).toEqual('COVID-19');
 
-    console.log(np);
+    // console.log(np);
   });
 
   it('processes the values in a post 4', () => {
@@ -135,6 +135,6 @@ describe('Reddit service', () => {
       'https://b.thumbs.redditmedia.com/FCAoiBNovM29ojGpWrSqN3puIz5nPN6oFWG-6vKvxBw.jpg'
     );
 
-    console.log(np);
+    // console.log(np);
   });
 });

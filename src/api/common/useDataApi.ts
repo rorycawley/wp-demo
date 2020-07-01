@@ -54,7 +54,7 @@ const useDataAPI = (
       dispatch({ type: 'FETCH_INIT' });
 
       try {
-        console.info(`🚀fetching: ${url}`);
+        // console.info(`🚀fetching: ${url}`);
         const response = await window.fetch(url, {
           signal: abortController.signal,
         });

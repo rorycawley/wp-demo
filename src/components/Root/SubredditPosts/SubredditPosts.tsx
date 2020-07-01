@@ -47,8 +47,6 @@ const SubredditPosts: React.FC<{}> = () => {
     const classes = useStyles();
     const { subreddit, setSubreddit } = useSubreddit()!;
     const [count, setCount] = useState(0);
-    // const [before, setBefore] = useState<string | null | undefined>(null);
-    // const [after, setAfter] = useState<string | null | undefined>(null);
 
     const [{ data, isLoading, isError }, doFetch] = useDataAPI(
       subredditPostsUrl(subreddit),
@@ -60,7 +58,7 @@ const SubredditPosts: React.FC<{}> = () => {
       doFetch(subredditPostsUrl(subreddit, '', before ? before : '', count));
 
       setCount(count ? Math.abs(count - REDDIT_POSTS_PER_PAGE) : 0);
-      console.log(count);
+      // console.log(count);
     };
 
     const nextPage = () => {
@@ -68,7 +66,7 @@ const SubredditPosts: React.FC<{}> = () => {
       doFetch(subredditPostsUrl(subreddit, after ? after : '', '', count));
       setCount(count + REDDIT_POSTS_PER_PAGE);
 
-      console.log(count);
+      // console.log(count);
     };
 
     useEffect(() => {
@@ -76,8 +74,6 @@ const SubredditPosts: React.FC<{}> = () => {
       doFetch(subredditPostsUrl(subreddit, '', '', count));
       setCount(0);
     }, [subreddit]);
-
-    // const classes = useStyles();
 
     if (isError) {
       throw new Error('There was a error while getting the posts data');
@@ -141,10 +137,6 @@ const SubredditPosts: React.FC<{}> = () => {
       </>
     );
   } catch (error) {
-    // TODO test this scenario
-    // https://dev.to/bil/using-abortcontroller-with-react-hooks-and-typescript-to-cancel-window-fetch-requests-1md4
-    // https://dev.to/pallymore/testing-api-request-hooks-with-jest-sinon-and-react-testing-library-3ncf
-    // console.error('Error loading data' + error.message);
     return (
       <ErrorFound error="We apologize for the inconvenience but there's been a temporary problem that will be fixed shortly." />
     );

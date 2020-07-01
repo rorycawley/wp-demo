@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 import { useSubreddit } from '../SubredditContext';
 
@@ -6,7 +6,6 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
-import useDebounce from '../../../api/common/useDebounce';
 
 import {
   DEFAULT_SUBREDDIT,
@@ -49,7 +48,6 @@ const SubredditSearchBar: React.FC<{}> = () => {
     const dropdownSubreddits: string[] = getSubredditNames(subreddits);
 
     const loading = (open && dropdownSubreddits.length === 0) || isLoading;
-    // const debouncedSearchTerm = useDebounce(searchQuery, 100);
 
     // keypress handler
     const handleInputChange = (
@@ -59,11 +57,8 @@ const SubredditSearchBar: React.FC<{}> = () => {
     ) => {
       setSearchQuery(typedInSubreddit);
 
-      // limit the continuous API calls made by using debounce
-      // if (debouncedSearchTerm) {
       // find a list of subreddits that match what we've typed
       doFetch(searchSubredditsURL(typedInSubreddit));
-      // }
     };
 
     // select a subreddit

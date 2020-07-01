@@ -1,5 +1,18 @@
 const REDDIT_API_URI = 'https://www.reddit.com';
 export const REDDIT_POSTS_PER_PAGE = 10;
+export const DEFAULT_SUBREDDIT = '';
+export const DEFAULT_SUBREDDITS_LIST = { subreddits: [] };
+export const DEFAULT_POSTS_LIST: SubredditListOfPostsRaw = {
+  kind: 'Listing',
+  data: {
+    dist: -1,
+    modhash: '',
+    children: [],
+    after: null,
+    before: null,
+  },
+};
+
 export type SubredditData = {
   name: string;
 };
@@ -34,8 +47,6 @@ export type SubredditPost = {
   thumbnail: string;
   title: string;
   url: string;
-  // link_flair_text: string;
-  // likes: string | null;
 };
 
 export interface SubredditPostData {
@@ -79,18 +90,6 @@ export const subredditsFromListData = (subredditListData: {
   return arrayRawSubredditData.map(item => item.data);
 };
 
-export const DEFAULT_SUBREDDIT = '';
-export const DEFAULT_SUBREDDITS_LIST = { subreddits: [] };
-export const DEFAULT_POSTS_LIST: SubredditListOfPostsRaw = {
-  kind: 'Listing',
-  data: {
-    dist: -1,
-    modhash: '',
-    children: [],
-    after: null,
-    before: null,
-  },
-};
 const stripToAlphaNumUnderscore = (s: string) => s.replace(/[^\w]/g, '');
 export const cleanSubredditName = (s: string) =>
   stripToAlphaNumUnderscore(s).toLowerCase();
