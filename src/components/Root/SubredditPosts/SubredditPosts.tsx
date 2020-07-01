@@ -5,12 +5,13 @@ import { useSubreddit } from '../SubredditContext';
 import ErrorFound from '../ErrorFound';
 import Loading from './Loading';
 import useDataAPI from '../../../api/common';
+import normalizeSubredditPost from '../../../api/reddit/normalizeSubredditPost';
 
 import {
   DEFAULT_POSTS_LIST,
-  SubredditPostData,
-  SubredditPostListData,
   subredditPostsUrl,
+  SubredditListOfPostsRaw,
+  subredditsFromListData,
 } from '../../../api/reddit';
 import { Typography, Grid } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
@@ -39,9 +40,10 @@ const lg = 4;
 const xl = 3;
 
 const SubredditPosts: React.FC<{}> = () => {
-  const classes = useStyles();
-  const { subreddit, setSubreddit } = useSubreddit()!;
   try {
+    const classes = useStyles();
+    const { subreddit, setSubreddit } = useSubreddit()!;
+
     const [{ data, isLoading, isError }, doFetch] = useDataAPI(
       subredditPostsUrl(subreddit),
       DEFAULT_POSTS_LIST
@@ -58,11 +60,11 @@ const SubredditPosts: React.FC<{}> = () => {
       throw new Error('There was a error while getting the posts data');
     }
 
-    // turn the data into a list of posts
-    const posts: SubredditPostData[] = (data as SubredditPostListData).data
-      .children;
+    // normalise the posts data
+    const posts = subredditsFromListData(
+      data as SubredditListOfPostsRaw
+    ).map(post => normalizeSubredditPost(post));
 
-    // console.log(posts.map(p => p.data.title));
     return (
       <>
         <Typography className={classes.heading}>
@@ -73,27 +75,23 @@ const SubredditPosts: React.FC<{}> = () => {
           <Loading />
         ) : (
           <Grid container spacing={2} className={classes.post}>
-            {/* <Post post={posts[0]} /> */}
-              <div>placeholder</div>
-            {/* posts.map(({data}) => (
-            <Grid item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
-              <Post post={data} />
-            </Grid>
-            )) */}
+            {posts.map(post => (
+              <Grid
+                key={post.name}
+                item
+                xs={xs}
+                sm={sm}
+                md={md}
+                lg={lg}
+                xl={xl}
+              >
+                <Post {...post} />
+              </Grid>
+            ))}
           </Grid>
         )}
       </>
     );
-    // return (
-    //   <>
-    //     {isLoading ? (
-    //       <div>Loading...</div>
-    //     ) : (
-    //       // <ListOfSubredditPosts subredditPostsData={postData.data.children} />
-    //       {postData.data.children.map(post: SubredditPostData => <div>{post}</div>)}
-    //     )}
-    //   </>
-    // );
   } catch (error) {
     // TODO test this scenario
     // https://dev.to/bil/using-abortcontroller-with-react-hooks-and-typescript-to-cancel-window-fetch-requests-1md4

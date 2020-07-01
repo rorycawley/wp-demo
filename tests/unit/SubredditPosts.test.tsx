@@ -8,8 +8,14 @@ import {
 } from '@testing-library/react';
 import { setupServer } from 'msw/node';
 import { handlers, rest, allNewPostsURL, failureURL } from '../common/handlers';
+import { listOfPosts } from '../testData/posts';
 
 import SubredditPosts from '../../src/components/Root/SubredditPosts';
+import { SubredditPost, subredditsFromListData } from '../../src/api/reddit';
+import Post from '../../src/components/Root/SubredditPosts/Post';
+import normalizeSubredditPost from '../../src/api/reddit/normalizeSubredditPost';
+
+const subreddits = subredditsFromListData(listOfPosts);
 
 let documentBody: RenderResult;
 
@@ -22,6 +28,15 @@ describe('<SubredditPosts />', () => {
 
   beforeEach(() => {
     documentBody = render(<SubredditPosts />);
+  });
+
+  it('lists the subreddits out to show it has them', () => {
+    subreddits.map(
+      (props: unknown) =>
+        (documentBody = render(
+          <Post {...normalizeSubredditPost(props as SubredditPost)} />
+        ))
+    );
   });
 
   it('renders message when posts are fetched successfully', async () => {
@@ -49,7 +64,7 @@ describe('<SubredditPosts />', () => {
       })
     );
 
-    documentBody = render(<SubredditPosts selectedSubreddit='failure' />);
+    // documentBody = render(<SubredditPosts selectedSubreddit='failure' />);
 
     // expect(
     //   await waitForElement(() => screen.getByText('Newest posts from'))

@@ -8,38 +8,81 @@ export type SubredditListData = {
   subreddits: Array<SubredditData>;
 };
 
-export type SubredditPost = {
-  title: string;
-  link_flair_text: string;
-  likes: string | null;
+export type SubredditPostNormalised = {
+  author: string;
+  created: string;
   id: string;
+  link_flair_text: string;
   name: string;
+  num_comments: string;
+  score: string;
+  text: string;
+  thumbnail: string;
+  title: string;
+  url: string;
 };
 
-export type SubredditPostData = {
+export type SubredditPost = {
+  author: string;
+  created_utc: number;
+  id: string;
+  link_flair_text: string | null;
+  name: string;
+  num_comments: number;
+  score: number;
+  selftext: string | null;
+  thumbnail: string;
+  title: string;
+  url: string;
+  // link_flair_text: string;
+  // likes: string | null;
+};
+
+export interface SubredditPostData {
   kind: string;
   data: SubredditPost;
-};
-
-enum RedditResponseKind {
-  LISTING = 'Listing',
 }
 
-export type SubredditPostListData = {
-  kind: RedditResponseKind.LISTING;
+export interface SubredditListOfPostsData {
+  modhash: string;
+  dist: number;
+  children: SubredditPostData[];
+  after?: string | null;
+  before?: string | null;
+}
+
+export interface SubredditListOfPostsRaw {
+  kind: string;
+  data: SubredditListOfPostsData;
+}
+
+export const subredditsFromListData = (subredditListData: {
   data: {
-    modhash: string;
-    dist: number;
-    children: Array<SubredditPostData>;
-    after: string | null;
-    before: string | null;
+    children: {
+      data: {
+        author: string;
+        created_utc: number;
+        id: string;
+        link_flair_text: string | null;
+        name: string;
+        num_comments: number;
+        score: number;
+        selftext: string | null;
+        thumbnail: string;
+        title: string;
+        url: string;
+      };
+    }[];
   };
+}) => {
+  const arrayRawSubredditData = subredditListData.data.children;
+  return arrayRawSubredditData.map(item => item.data);
 };
 
 export const DEFAULT_SUBREDDIT = '';
 export const DEFAULT_SUBREDDITS_LIST = { subreddits: [] };
-export const DEFAULT_POSTS_LIST: SubredditPostListData = {
-  kind: RedditResponseKind.LISTING,
+export const DEFAULT_POSTS_LIST: SubredditListOfPostsRaw = {
+  kind: 'Listing',
   data: {
     dist: -1,
     modhash: '',

@@ -49,7 +49,7 @@ const SubredditSearchBar: React.FC<{}> = () => {
     const dropdownSubreddits: string[] = getSubredditNames(subreddits);
 
     const loading = (open && dropdownSubreddits.length === 0) || isLoading;
-    const debouncedSearchTerm = useDebounce(searchQuery, 100);
+    // const debouncedSearchTerm = useDebounce(searchQuery, 100);
 
     // keypress handler
     const handleInputChange = (
@@ -60,10 +60,10 @@ const SubredditSearchBar: React.FC<{}> = () => {
       setSearchQuery(typedInSubreddit);
 
       // limit the continuous API calls made by using debounce
-      if (debouncedSearchTerm) {
-        // find a list of subreddits that match what we've typed
-        doFetch(searchSubredditsURL(typedInSubreddit));
-      }
+      // if (debouncedSearchTerm) {
+      // find a list of subreddits that match what we've typed
+      doFetch(searchSubredditsURL(typedInSubreddit));
+      // }
     };
 
     // select a subreddit
