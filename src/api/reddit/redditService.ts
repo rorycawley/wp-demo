@@ -1,5 +1,5 @@
 const REDDIT_API_URI = 'https://www.reddit.com';
-const REDDIT_POSTS_PER_PAGE = '10';
+export const REDDIT_POSTS_PER_PAGE = 10;
 export type SubredditData = {
   name: string;
 };
@@ -102,12 +102,13 @@ const subredditUri = (
   subreddit: string,
   after: string,
   before: string,
-  limit: string,
+  count: number,
+  limit: number,
   nsfw: string
 ): string =>
   `/r/${
     subreddit ? `${subreddit}` : 'all'
-  }/new.json?nsfw=${nsfw}&limit=${limit}` +
+  }/new.json?nsfw=${nsfw}&limit=${limit}&count=${count}` +
   (before ? `&before=${before}` : '') +
   (after ? `&after=${after}` : '');
 
@@ -115,10 +116,12 @@ export const subredditPostsUrl = (
   subreddit = 'all',
   after = '',
   before = '',
+  count = 0,
   limit = REDDIT_POSTS_PER_PAGE,
   nsfw = '0',
   baseURL = REDDIT_API_URI
-): string => baseURL + subredditUri(subreddit, after, before, limit, nsfw);
+): string =>
+  baseURL + subredditUri(subreddit, after, before, count, limit, nsfw);
 
 // export const initialSubredditPostsURL = (subreddit: string) =>
 //   subredditPostsUrl(subreddit);
