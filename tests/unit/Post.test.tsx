@@ -2,8 +2,8 @@ import * as React from 'react';
 import { render, RenderResult, screen } from '@testing-library/react';
 import normalizeSubredditPost from '../../src/api/reddit/normalizeSubredditPost';
 
-import Post from '../../src/components/Root/SubredditPosts/Post';
-import {postJson1,postJson2,postJson3,postJson4} from '../testData/posts'
+import Post from '../../src/components/Root/PostList/Post';
+import {postJson1,postJson2,postJson3,postJson4} from '../common/testData/posts'
 
 
 let documentBody: RenderResult;

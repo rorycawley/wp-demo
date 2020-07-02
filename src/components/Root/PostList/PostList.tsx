@@ -42,7 +42,7 @@ const md = 6;
 const lg = 4;
 const xl = 3;
 
-const SubredditPosts: React.FC<{}> = () => {
+const PostList: React.FC<{}> = () => {
   try {
     const classes = useStyles();
     const { subreddit, setSubreddit } = useSubreddit()!;
@@ -142,4 +142,4 @@ const SubredditPosts: React.FC<{}> = () => {
     );
   }
 };
-export default SubredditPosts;
+export default PostList;

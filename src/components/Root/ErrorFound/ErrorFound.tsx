@@ -1,11 +1,13 @@
-import React, { memo } from 'react';
+import React from 'react';
+
+const defaultErrorMessage = 'An error has occurred.';
 
 type ErrorMessage = {
-  error: string;
+  error?: string;
 };
 
-const ErrorFound = memo(function ErrorFound({ error }: ErrorMessage) {
+const ErrorFound = ({ error = defaultErrorMessage }) => {
   return <div>{error}</div>;
-});
+};
 
 export default ErrorFound;

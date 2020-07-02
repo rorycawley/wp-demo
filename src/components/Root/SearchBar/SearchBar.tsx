@@ -28,7 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-const SubredditSearchBar: React.FC<{}> = () => {
+const SearchBar: React.FC<{}> = () => {
   const classes = useStyles();
   const { subreddit, setSubreddit } = useSubreddit()!;
   const [searchQuery, setSearchQuery] = useState('');
@@ -116,4 +116,4 @@ const SubredditSearchBar: React.FC<{}> = () => {
     );
   }
 };
-export default SubredditSearchBar;
+export default SearchBar;

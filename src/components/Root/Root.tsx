@@ -8,8 +8,8 @@ import {
 
 import Header from './Header';
 import theme from '../../ui/theme';
-import SubredditPosts from './SubredditPosts';
-import SubredditSearchBar from './SubredditSearchBar';
+import PostList from './PostList';
+import SearchBar from './SearchBar';
 
 import { SubredditProvider, useSubreddit } from './SubredditContext';
 
@@ -39,8 +39,8 @@ const Root: React.FC<{}> = () => {
           <Grid item container>
             <Grid item xs={false} sm={2} />
             <Grid item xs={12} sm={8} className={classes.content}>
-              <SubredditSearchBar />
-              <SubredditPosts />
+              <SearchBar />
+              <PostList />
             </Grid>
             <Grid item xs={false} sm={2} />
           </Grid>

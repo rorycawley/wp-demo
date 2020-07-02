@@ -6,13 +6,13 @@ import {
   fireEvent,
 } from '@testing-library/react';
 
-import SubredditSearchBar from '../../src/components/Root/SubredditSearchBar';
+import SearchBar from '../../src/components/Root/SearchBar';
 
 let documentBody: RenderResult;
 
 describe('<SubredditSearchBar />', () => {
   beforeEach(() => {
-    documentBody = render(<SubredditSearchBar />);
+    documentBody = render(<SearchBar />);
   });
 
   it('shows the SubredditSearchBar has rendered', () => {

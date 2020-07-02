@@ -8,11 +8,11 @@ import {
 } from '@testing-library/react';
 import { setupServer } from 'msw/node';
 import { handlers, rest, allNewPostsURL, failureURL } from '../common/handlers';
-import { listOfPosts } from '../testData/posts';
+import { listOfPosts } from '../common/testData/posts';
 
-import SubredditPosts from '../../src/components/Root/SubredditPosts';
+import PostList from '../../src/components/Root/PostList';
 import { SubredditPost, subredditsFromListData } from '../../src/api/reddit';
-import Post from '../../src/components/Root/SubredditPosts/Post';
+import Post from '../../src/components/Root/PostList/Post';
 import normalizeSubredditPost from '../../src/api/reddit/normalizeSubredditPost';
 
 const subreddits = subredditsFromListData(listOfPosts);
@@ -27,7 +27,7 @@ describe('<SubredditPosts />', () => {
   afterEach(() => server.resetHandlers());
 
   beforeEach(() => {
-    documentBody = render(<SubredditPosts />);
+    documentBody = render(<PostList />);
   });
 
   it('lists the subreddits out to show it has them', () => {
@@ -40,7 +40,7 @@ describe('<SubredditPosts />', () => {
   });
 
   it('renders message when posts are fetched successfully', async () => {
-    documentBody = render(<SubredditPosts />);
+    documentBody = render(<PostList />);
 
     screen.debug();
     // loading

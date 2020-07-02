@@ -4,10 +4,15 @@ import {
   subredditPostsUrl,
 } from '../../src/api/reddit';
 import normalizeSubredditPost from '../../src/api/reddit/normalizeSubredditPost';
-import { postJson1, postJson2, postJson3, postJson4 } from '../testData/posts';
+import {
+  postJson1,
+  postJson2,
+  postJson3,
+  postJson4,
+} from '../common/testData/posts';
 
 describe('Reddit service', () => {
-  it('cleanSubredditName', () => {
+  it('cleans text to become an accepted SubredditName', () => {
     const testDataForcleanSubredditName = [
       ['ABC', 'abc'],
       ['ABc', 'abc'],
@@ -27,7 +32,7 @@ describe('Reddit service', () => {
     ).toBeTruthy();
   });
 
-  it('creates the URL to get subreddits autocomlete', () => {
+  it('creates the subreddit list URL with subreddit input', () => {
     expect(searchSubredditsURL('reactjs')).toEqual(
       'https://www.reddit.com/api/subreddit_autocomplete.json?query=reactjs&include_over_18=0&include_profiles=0'
     );
@@ -35,32 +40,29 @@ describe('Reddit service', () => {
 
   it('creates a correct URL when you provide no subreddit', () => {
     expect(subredditPostsUrl('')).toEqual(
-      'https://www.reddit.com/r/all/new.json?nsfw=0&limit=10'
-    );
-    expect(subredditPostsUrl()).toEqual(
-      'https://www.reddit.com/r/all/new.json?nsfw=0&limit=10'
-    );
-  });
-
-  it('creates a correct URL posts with just a subreddit parameter', () => {
-    expect(subredditPostsUrl('reactjs')).toEqual(
-      'https://www.reddit.com/r/reactjs/new.json?nsfw=0&limit=10'
+      'https://www.reddit.com/r/all/new.json?nsfw=0&limit=10&count=0'
     );
   });
 
   it('creates a correct URL posts with a subreddit parameter and an after parameter', () => {
     expect(subredditPostsUrl('reactjs', 'afterThis')).toEqual(
-      'https://www.reddit.com/r/reactjs/new.json?nsfw=0&limit=10&after=afterThis'
+      'https://www.reddit.com/r/reactjs/new.json?nsfw=0&limit=10&count=0&after=afterThis'
     );
   });
 
   it('creates a correct URL posts with a subreddit parameter and a before parameter', () => {
     expect(subredditPostsUrl('reactjs', '', 'beforeThis')).toEqual(
-      'https://www.reddit.com/r/reactjs/new.json?nsfw=0&limit=10&before=beforeThis'
+      'https://www.reddit.com/r/reactjs/new.json?nsfw=0&limit=10&count=0&before=beforeThis'
     );
   });
 
-  it('processes the values in a post 1', () => {
+  it('creates a correct URL posts with a count parameter', () => {
+    expect(subredditPostsUrl('', '', '', 10)).toEqual(
+      'https://www.reddit.com/r/all/new.json?nsfw=0&limit=10&count=10'
+    );
+  });
+
+  it('processes the values in a json response so they can be uses by the Post component, for subreddit post example 1', () => {
     const np = normalizeSubredditPost(postJson1);
 
     expect(np.title).toEqual('Keto loss so far');
@@ -80,7 +82,7 @@ describe('Reddit service', () => {
     // console.log(np);
   });
 
-  it('processes the values in a post 2', () => {
+  it('processes the values in a json response so they can be uses by the Post component, for subreddit post example 2', () => {
     const np = normalizeSubredditPost(postJson2);
 
     expect(np.title).toEqual('Gambowl on a bed= bad idea');
@@ -98,7 +100,7 @@ describe('Reddit service', () => {
     // console.log(np);
   });
 
-  it('processes the values in a post 3', () => {
+  it('processes the values in a json response so they can be uses by the Post component, for subreddit post example 3', () => {
     const np = normalizeSubredditPost(postJson3);
 
     expect(np.title).toEqual(
@@ -120,7 +122,7 @@ describe('Reddit service', () => {
     // console.log(np);
   });
 
-  it('processes the values in a post 4', () => {
+  it('processes the values in a json response so they can be uses by the Post component, for subreddit post example 4', () => {
     const np = normalizeSubredditPost(postJson4);
 
     expect(np.link_flair_text).toEqual('Resource');
