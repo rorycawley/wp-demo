@@ -18,6 +18,7 @@ import {
 import { Typography, Grid, IconButton } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
 import Post from './Post';
+import PageNav from './PageNav';
 
 const useStyles = makeStyles(theme => ({
   content: {
@@ -53,7 +54,7 @@ const PostList: React.FC<{}> = () => {
       DEFAULT_POSTS_LIST
     );
 
-    const previousPage = () => {
+    const backPage = () => {
       const before = (data as SubredditListOfPostsRaw).data.before;
       doFetch(subredditPostsUrl(subreddit, '', before ? before : '', count));
 
@@ -86,6 +87,12 @@ const PostList: React.FC<{}> = () => {
 
     return (
       <>
+        <PageNav
+          clickNext={nextPage}
+          clickBack={backPage}
+          nextDisabled={(data as SubredditListOfPostsRaw).data.after === null}
+          backDisabled={count <= 0}
+        />
         <Typography className={classes.heading}>
           Newest posts from
           <strong> /r/{subreddit ? subreddit : 'all'}</strong>
@@ -112,30 +119,14 @@ const PostList: React.FC<{}> = () => {
                 <Post {...post} />
               </Grid>
             ))}
-            <Grid
-              container
-              spacing={2}
-              className={classes.post}
-              alignContent='space-around'
-              justify='center'
-            >
-              <IconButton
-                aria-label='back'
-                disabled={count <= 0}
-                color='default'
-                onClick={() => previousPage()}
-              >
-                <ArrowBackIosIcon />
-              </IconButton>
-
-              <IconButton
-                color='default'
-                aria-label='next'
-                onClick={() => nextPage()}
-              >
-                <ArrowForwardIosIcon />
-              </IconButton>
-            </Grid>
+            <PageNav
+              clickNext={nextPage}
+              clickBack={backPage}
+              nextDisabled={
+                (data as SubredditListOfPostsRaw).data.after === null
+              }
+              backDisabled={count <= 0}
+            />{' '}
           </Grid>
         )}
       </>
