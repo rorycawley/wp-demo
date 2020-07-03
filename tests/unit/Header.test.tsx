@@ -8,9 +8,7 @@ const container = document.createElement('div');
 
 describe('<Header />', () => {
   beforeEach(() => {
-    // documentBody = render(
-    //   <ErrorFound error="We apologize for the inconvenience but there's been a temporary problem that will be fixed shortly." />
-    // );
+
   });
 
   it('renders the component', () => {

@@ -7,9 +7,6 @@ const container = document.createElement('div');
 
 describe('<ErrorFound />', () => {
   beforeEach(() => {
-    // documentBody = render(
-    //   <ErrorFound error="We apologize for the inconvenience but there's been a temporary problem that will be fixed shortly." />
-    // );
   });
   
   it('renders without a provided error parameter', () => {

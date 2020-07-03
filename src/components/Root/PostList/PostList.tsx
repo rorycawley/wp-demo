@@ -111,7 +111,7 @@ const PostList: React.FC<{}> = () => {
               container
               spacing={2}
               className={classes.post}
-              alignItems='space-around'
+              alignContent='space-around'
               justify='center'
             >
               <IconButton

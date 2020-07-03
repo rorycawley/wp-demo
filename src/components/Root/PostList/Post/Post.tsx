@@ -71,7 +71,7 @@ const Post: React.FC<SubredditPostProps> = ({
           </IconButton>
         }
         title={title}
-        subheader={created}
+        subheader={created + ' by /r/' + author}
       />
       {thumbnail && (
         <CardMedia className={classes.media} image={thumbnail} title={title} />

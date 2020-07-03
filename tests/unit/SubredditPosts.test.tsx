@@ -1,89 +1,74 @@
-import * as React from 'react';
+import React from 'react';
 import {
   render,
   RenderResult,
   screen,
-  waitForElement,
+  fireEvent,
   waitFor,
+  getByRole,
 } from '@testing-library/react';
-import { setupServer } from 'msw/node';
-import { handlers, rest, allNewPostsURL, failureURL } from '../utils/handlers';
-import { listOfPosts } from '../utils/testData/posts';
-
+import ReactDOM from 'react-dom';
 import PostList from '../../src/components/Root/PostList';
-import { SubredditPost, subredditsFromListData } from '../../src/api/reddit';
-import Post from '../../src/components/Root/PostList/Post';
-import normalizeSubredditPost from '../../src/api/reddit/normalizeSubredditPost';
+import { SubredditProvider } from '../../src/components/Root/SubredditContext';
 
-const subreddits = subredditsFromListData(listOfPosts);
+// import API mocking utilities from Mock Service Worker
+import { server, rest } from '../utils/setupMSW';
+const startupURL =
+  'https://www.reddit.com/r/all/new.json?nsfw=0&limit=10&count=0';
 
 let documentBody: RenderResult;
 
-describe('<SubredditPosts />', () => {
-  const server = setupServer(...handlers);
-
-  beforeAll(() => server.listen());
-  afterAll(() => server.close());
-  afterEach(() => server.resetHandlers());
-
+describe('<SubredditSearchBar />', () => {
   beforeEach(() => {
-    documentBody = render(<PostList />);
-  });
-
-  it('lists the subreddits out to show it has them', () => {
-    subreddits.map(
-      (props: unknown) =>
-        (documentBody = render(
-          <Post {...normalizeSubredditPost(props as SubredditPost)} />
-        ))
-    );
-  });
-
-  it('renders message when posts are fetched successfully', async () => {
-    documentBody = render(<PostList />);
-
-    screen.debug();
-    // loading
-    expect(
-      documentBody.container.getElementsByClassName(
-        'MuiSkeleton-root MuiSkeleton-text MuiSkeleton-pulse'
-      )
-    ).not.toBeNull();
-
-    expect(
-      await screen.findByText(/Картинки на прозрачном фоне - Авто skoda/i)
-    ).toBeInTheDocument();
-
-    screen.debug();
-  });
-
-  it('shows that an error has occurred', async () => {
     server.use(
-      rest.get(failureURL, (req, res, context) => {
-        return res(context.status(400));
+      rest.get(startupURL, (req, res, context) => {
+        console.log('great fun altogether');
+        return res(
+          context.status(200),
+          context.json({
+            kind: 'Listing',
+            data: {
+              modhash: '',
+              dist: 10,
+              children: [],
+              after: 't3_hkcn09',
+              before: null,
+            },
+          })
+        );
       })
     );
 
-    // documentBody = render(<SubredditPosts selectedSubreddit='failure' />);
-
-    // expect(
-    //   await waitForElement(() => screen.getByText('Newest posts from'))
-    // ).toBeInTheDocument();
-
-    // loading
-    expect(
-      documentBody.container.getElementsByClassName(
-        'MuiSkeleton-root MuiSkeleton-text MuiSkeleton-pulse'
-      )
-    ).not.toBeNull();
-
-    await waitFor(() =>
-      expect(
-        documentBody.getByText(
-          /We apologize for the inconvenience but there's been a temporary problem that will be fixed shortly./i
-        )
-      ).toBeInTheDocument()
+    documentBody = render(
+      <SubredditProvider>
+        <PostList />
+      </SubredditProvider>
     );
-    // screen.debug();
   });
+
+  it('shows the SubredditSearchBar has rendered', async () => {
+    await waitFor(() => screen.getByTestId('postlist'));
+
+    expect(screen.getByTestId('next')).toBeInTheDocument();
+    expect(screen.getByTestId('back')).toBeInTheDocument();
+
+    screen.debug();
+  });
+
+  // it('has an input box with the correct id rendered', async () => {
+  //   await waitFor(() => screen.getByTestId('postlist'));
+
+  //   const container = document.createElement('div');
+  //   ReactDOM.render(
+  //     <SubredditProvider>
+  //       <SearchBar />
+  //     </SubredditProvider>,
+  //     container
+  //   );
+  //   const input = document.getElementById('wp-autocomplete');
+  //   expect(input).not.toBeNull();
+
+  //   // not sure what the event should be
+  //   fireEvent.change(input!, { subreddit: { value: 'reactjs' } });
+  // });
 });
