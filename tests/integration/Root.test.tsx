@@ -7,7 +7,7 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { setupServer } from 'msw/node';
-import { handlers, rest, allNewPostsURL, failureURL } from '../common/handlers';
+import { handlers, rest, allNewPostsURL, failureURL } from '../utils/handlers';
 
 import Root from '../../src/components/Root';
 

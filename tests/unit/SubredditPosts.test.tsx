@@ -7,8 +7,8 @@ import {
   waitFor,
 } from '@testing-library/react';
 import { setupServer } from 'msw/node';
-import { handlers, rest, allNewPostsURL, failureURL } from '../common/handlers';
-import { listOfPosts } from '../common/testData/posts';
+import { handlers, rest, allNewPostsURL, failureURL } from '../utils/handlers';
+import { listOfPosts } from '../utils/testData/posts';
 
 import PostList from '../../src/components/Root/PostList';
 import { SubredditPost, subredditsFromListData } from '../../src/api/reddit';

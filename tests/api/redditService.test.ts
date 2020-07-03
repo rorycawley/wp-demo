@@ -9,7 +9,7 @@ import {
   postJson2,
   postJson3,
   postJson4,
-} from '../common/testData/posts';
+} from '../utils/testData/posts';
 
 describe('Reddit service', () => {
   it('cleans text to become an accepted SubredditName', () => {

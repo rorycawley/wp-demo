@@ -49,33 +49,37 @@ const useDataAPI = (
   });
 
   useEffect(() => {
-    const abortController = new AbortController();
-    const fetchData = async () => {
-      dispatch({ type: 'FETCH_INIT' });
+    if (url !== '') {
+      const abortController = new AbortController();
+      const fetchData = async () => {
+        dispatch({ type: 'FETCH_INIT' });
 
-      try {
-        // console.info(`🚀fetching: ${url}`);
-        const response = await window.fetch(url, {
-          signal: abortController.signal,
-        });
-        const result = await response.json();
-
-        if (!abortController.signal.aborted) {
-          dispatch({ type: 'FETCH_SUCCESS', payload: result });
-        }
-      } catch (error) {
-        if (!abortController.signal.aborted) {
-          dispatch({
-            type: 'FETCH_FAILURE',
+        try {
+          console.info(`🚀fetching: ${url}`);
+          const response = await window.fetch(url, {
+            signal: abortController.signal,
           });
-        }
-      }
-    };
+          const result = await response.json();
+          console.info('..response is: ' + JSON.stringify(result));
 
-    fetchData();
-    return () => {
-      abortController.abort(); // cancel pending fetch request on component unmount
-    };
+          if (!abortController.signal.aborted) {
+            dispatch({ type: 'FETCH_SUCCESS', payload: result });
+          }
+        } catch (error) {
+          if (!abortController.signal.aborted) {
+            dispatch({
+              type: 'FETCH_FAILURE',
+            });
+          }
+        }
+      };
+
+      fetchData();
+
+      return () => {
+        abortController.abort(); // cancel pending fetch request on component unmount
+      };
+    }
   }, [url]);
 
   return [state, setUrl];

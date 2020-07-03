@@ -75,6 +75,7 @@ const SearchBar: React.FC<{}> = () => {
     return (
       <Autocomplete
         id='wp-autocomplete'
+        data-testid='searchbar'
         className={classes.searchBar}
         onInputChange={handleInputChange}
         onChange={handleSelectedSubreddit}

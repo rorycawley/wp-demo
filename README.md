@@ -4,6 +4,7 @@
 
 - [About the Project](#about-the-project)
   - [Built With](#built-with)
+  - [Tested With](#tested-with)
   - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
   - [Installation](#installation)
@@ -26,13 +27,19 @@ The project was build with these libraries:
 - [React](https://reactjs.org/)
 - [Material UI](https://material-ui.com/)
 
+### Tested With
+
+- [Jest](https://jestjs.io/)
+- [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
+- [Mock Service Worker](https://mswjs.io/) (used to help test components that use API)
+
 ### Project Structure
 
 The project has 3 core components.
 
 - [ Root ] - the top level container, provides a Context wrapper holding a global state for the currentlychosen subreddit
-- [ SearchBar ] - this holds the Autocomplete functionality, it uses the useDataApi hook to fetch list of subreddits
-- [ SubRedditPosts ] - it uses the useDataApi hook to fetch a list of posts when the subreddit changes or the page changes
+- [ SearchBar ] - this holds the Autocomplete functionality, it uses the useDataAPI hook to fetch list of subreddits
+- [ SubRedditPosts ] - it uses the useDataAPI hook to fetch a list of posts when the subreddit changes or the page changes
 
 ## Getting Started
 

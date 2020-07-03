@@ -111,26 +111,25 @@ const PostList: React.FC<{}> = () => {
               container
               spacing={2}
               className={classes.post}
-              alignItems='center'
+              alignItems='space-around'
               justify='center'
             >
-              <Grid item xs={xs} sm={sm} md={md} lg={lg} xl={xl}>
-                <IconButton
-                  aria-label='back'
-                  disabled={count <= 0}
-                  color='default'
-                  onClick={() => previousPage()}
-                >
-                  <ArrowBackIosIcon />
-                </IconButton>
-                <IconButton
-                  color='default'
-                  aria-label='next'
-                  onClick={() => nextPage()}
-                >
-                  <ArrowForwardIosIcon />
-                </IconButton>
-              </Grid>
+              <IconButton
+                aria-label='back'
+                disabled={count <= 0}
+                color='default'
+                onClick={() => previousPage()}
+              >
+                <ArrowBackIosIcon />
+              </IconButton>
+
+              <IconButton
+                color='default'
+                aria-label='next'
+                onClick={() => nextPage()}
+              >
+                <ArrowForwardIosIcon />
+              </IconButton>
             </Grid>
           </Grid>
         )}

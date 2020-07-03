@@ -16,5 +16,5 @@
     "jsx": "react",
     "baseUrl": "."
   },
-  "exclude": ["node_modules", "dist", "wparchive", ".vscode"]
+  "exclude": ["node_modules", "dist", "wparchive", ".vscode", "test/**/*"]
 }

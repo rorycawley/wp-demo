@@ -1,2 +1,2 @@
-import useDataApi from './useDataApi';
-export default useDataApi;
+import useDataAPI from './useDataAPI';
+export default useDataAPI;
