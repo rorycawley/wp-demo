@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { useSubreddit } from '../SubredditContext';
 
@@ -16,6 +16,7 @@ import ErrorFound from '../ErrorFound';
 import { searchSubredditsURL } from '../../../api/reddit';
 import { SubredditData, SubredditListData } from '../../../api/reddit';
 import useDataAPI from '../../../api/common';
+import useDebounce from '../../../api/common/useDebounce';
 
 const getSubredditNames = (subreddits: SubredditData[]) =>
   subreddits.map(subreddit => subreddit.name);
@@ -58,7 +59,7 @@ const SearchBar: React.FC<{}> = () => {
       setSearchQuery(typedInSubreddit);
 
       // find a list of subreddits that match what we've typed
-      doFetch(searchSubredditsURL(typedInSubreddit));
+      // doFetch(searchSubredditsURL(typedInSubreddit));
     };
 
     // select a subreddit
@@ -71,6 +72,12 @@ const SearchBar: React.FC<{}> = () => {
         setSearchQuery(selectedSubreddit);
       }
     };
+
+    // Allow the API to be called only when the user stops typing
+    const debouncedSearchTerm = useDebounce(searchQuery, 300);
+    useEffect(() => {
+      doFetch(searchSubredditsURL(debouncedSearchTerm));
+    }, [debouncedSearchTerm]);
 
     return (
       <Autocomplete
