@@ -93,7 +93,12 @@ const PostList: React.FC<{}> = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          <Grid container spacing={2} className={classes.post}>
+          <Grid
+            container
+            spacing={2}
+            className={classes.post}
+            data-testid='postlist'
+          >
             {posts.map(post => (
               <Grid
                 key={post.name}
