@@ -6,7 +6,9 @@ type ErrorMessage = {
   error?: string;
 };
 
-const ErrorFound = ({ error = defaultErrorMessage }) => {
+const ErrorFound: React.FC<{ error: string }> = ({
+  error = defaultErrorMessage,
+}) => {
   return <div>{error}</div>;
 };
 

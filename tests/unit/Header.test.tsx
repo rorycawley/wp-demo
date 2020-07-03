@@ -7,12 +7,10 @@ import Header from '../../src/components/Root/Header';
 const container = document.createElement('div');
 
 describe('<Header />', () => {
-  beforeEach(() => {
-
-  });
+  beforeEach(() => {});
 
   it('renders the component', () => {
-    const component = <Header data-testid='header-found-test' />;
+    const component = <Header />;
 
     document.body.appendChild(container);
 
