@@ -19,6 +19,15 @@ const Loading = memo(function Loading() {
       <Skeleton />
       <Skeleton animation={false} />
       <Skeleton animation='wave' />
+      <Skeleton />
+      <Skeleton animation={false} />
+      <Skeleton animation='wave' />
+      <Skeleton />
+      <Skeleton animation={false} />
+      <Skeleton animation='wave' />
+      <Skeleton />
+      <Skeleton animation={false} />
+      <Skeleton animation='wave' />
     </div>
   );
 });

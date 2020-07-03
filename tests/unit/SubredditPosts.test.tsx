@@ -46,7 +46,7 @@ describe('<SubredditSearchBar />', () => {
     );
   });
 
-  it('shows the SubredditSearchBar has rendered', async () => {
+  it('shows the navigation has rendered', async () => {
     await waitFor(() => screen.getByTestId('postlist'));
 
     expect(screen.getByTestId('next')).toBeInTheDocument();
