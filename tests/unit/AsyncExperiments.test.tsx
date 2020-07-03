@@ -39,7 +39,7 @@ const Todo = () => {
 
     get<TitleListData>(url1).then(response => {
       setTodos(response.parsedBody!.children);
-      console.log(response.parsedBody!.children);
+      // console.log(response.parsedBody!.children);
     });
 
     setIsLoading(false);
@@ -74,7 +74,7 @@ const waitForLoadingToFinish = () =>
 it('renders Todo', async () => {
   server.use(
     rest.get(url1, (req, res, context) => {
-      console.log('great fun altogether');
+      // console.log('great fun altogether');
       return res(
         context.status(200),
         context.json({

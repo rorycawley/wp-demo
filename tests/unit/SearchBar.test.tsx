@@ -21,7 +21,7 @@ describe('<SubredditSearchBar />', () => {
   beforeEach(() => {
     server.use(
       rest.get(startupURL, (req, res, context) => {
-        console.log('great fun altogether');
+        // console.log('great fun altogether');
         return res(
           context.status(200),
           context.json({

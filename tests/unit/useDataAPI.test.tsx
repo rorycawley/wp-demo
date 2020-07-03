@@ -131,17 +131,17 @@ describe('useDataAPI', () => {
     // set up the MSW to return the JSON resposes when matched to the URLs
     server.use(
       rest.get(testURL1, (req, res, context) => {
-        console.log(`🚀 MSW called with: ${testURL1}`);
+        // console.log(`🚀 MSW called with: ${testURL1}`);
 
         return res(context.status(200), context.json(responseData1));
       }),
       rest.get(testURL2, (req, res, context) => {
-        console.log(`🚀 MSW called with: ${testURL2}`);
+        // console.log(`🚀 MSW called with: ${testURL2}`);
 
         return res(context.status(200), context.json(responseData2));
       }),
       rest.get(testURL3, (req, res, context) => {
-        console.log(`🚀 MSW called with: ${testURL3}`);
+        // console.log(`🚀 MSW called with: ${testURL3}`);
 
         return res(context.status(200), context.json(responseData3));
       })

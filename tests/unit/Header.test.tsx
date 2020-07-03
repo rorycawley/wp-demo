@@ -18,6 +18,6 @@ describe('<Header />', () => {
 
     expect(container.textContent).toMatch('WP Reddit Demo');
 
-    console.log(container.innerHTML);
+    // console.log(container.innerHTML);
   });
 });

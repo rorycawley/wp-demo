@@ -2,23 +2,23 @@ import React, { useEffect, useState } from 'react';
 
 import { useSubreddit } from '../SubredditContext';
 
-import ErrorFound from '../ErrorFound';
-import Loading from './Loading';
-import useDataAPI from '../../../api/common';
-import { REDDIT_POSTS_PER_PAGE } from '../../../api/reddit';
 import normalizeSubredditPost from '../../../api/reddit/normalizeSubredditPost';
-import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import { REDDIT_POSTS_PER_PAGE } from '../../../api/reddit';
 import {
   DEFAULT_POSTS_LIST,
   subredditPostsUrl,
   SubredditListOfPostsRaw,
   subredditsFromListData,
 } from '../../../api/reddit';
+import useDataAPI from '../../../api/common';
+
+import ErrorFound from '../ErrorFound';
+import Loading from './Loading';
+import PageNav from './PageNav';
+import Post from './Post';
+
 import { Typography, Grid, IconButton } from '@material-ui/core';
 import makeStyles from '@material-ui/styles/makeStyles';
-import Post from './Post';
-import PageNav from './PageNav';
 
 const useStyles = makeStyles(theme => ({
   content: {

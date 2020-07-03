@@ -24,7 +24,7 @@ describe('<PostList />', () => {
   it('shows the PostList has rendered', async () => {
     server.use(
       rest.get(startupURL, (req, res, context) => {
-        console.log(`response to ${startupURL}`);
+        // console.log(`response to ${startupURL}`);
         return res(
           context.status(200),
           context.json({
@@ -54,44 +54,10 @@ describe('<PostList />', () => {
     // screen.debug();
   });
 
-  it('shows the PostList navigation has rendered', async () => {
-    server.use(
-      rest.get(startupURL, (req, res, context) => {
-        console.log(`response to ${startupURL}`);
-        return res(
-          context.status(200),
-          context.json({
-            kind: 'Listing',
-            data: {
-              modhash: '',
-              dist: 10,
-              children: [],
-              after: 't3_hkcn09',
-              before: null,
-            },
-          })
-        );
-      })
-    );
-
-    documentBody = render(
-      <SubredditProvider>
-        <PostList />
-      </SubredditProvider>
-    );
-
-    await waitFor(() => screen.getByTestId('postlist'));
-
-    expect(screen.getByLabelText('next')).toBeInTheDocument();
-    expect(screen.getByLabelText('back')).toBeInTheDocument();
-
-    // screen.debug();
-  });
-
   it('shows the PostList has rendered with 2 sample posts', async () => {
     server.use(
       rest.get(startupURL, (req, res, context) => {
-        console.log(`response to ${startupURL}`);
+        // console.log(`response to ${startupURL}`);
         return res(
           context.status(200),
           context.json({

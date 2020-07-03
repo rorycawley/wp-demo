@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
 
-import { useSubreddit } from '../SubredditContext';
-
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core';
@@ -17,6 +15,7 @@ import { searchSubredditsURL } from '../../../api/reddit';
 import { SubredditData, SubredditListData } from '../../../api/reddit';
 import useDataAPI from '../../../api/common';
 import useDebounce from '../../../api/common/useDebounce';
+import { useSubreddit } from '../SubredditContext';
 
 const getSubredditNames = (subreddits: SubredditData[]) =>
   subreddits.map(subreddit => subreddit.name);

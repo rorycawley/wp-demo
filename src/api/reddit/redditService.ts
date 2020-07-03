@@ -121,10 +121,3 @@ export const subredditPostsUrl = (
   baseURL = REDDIT_API_URI
 ): string =>
   baseURL + subredditUri(subreddit, after, before, count, limit, nsfw);
-
-// export const initialSubredditPostsURL = (subreddit: string) =>
-//   subredditPostsUrl(subreddit);
-// export const nextPageSubredditPostsURL = (subreddit: string, after: string) =>
-//   subredditPostsUrl(subreddit, after);
-// export const prevPageSubredditPostsURL = (subreddit: string, before: string) =>
-//   subredditPostsUrl(subreddit, '', before);

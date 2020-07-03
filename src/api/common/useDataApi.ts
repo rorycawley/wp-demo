@@ -55,12 +55,12 @@ const useDataAPI = (
         dispatch({ type: 'FETCH_INIT' });
 
         try {
-          console.info(`🚀fetching: ${url}`);
+          // console.info(`🚀fetching: ${url}`);
           const response = await window.fetch(url, {
             signal: abortController.signal,
           });
           const result = await response.json();
-          console.info('..response is: ' + JSON.stringify(result));
+          // console.info('..response is: ' + JSON.stringify(result));
 
           if (!abortController.signal.aborted) {
             dispatch({ type: 'FETCH_SUCCESS', payload: result });

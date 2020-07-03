@@ -1,7 +1,7 @@
 import React, { useState, ReactNode } from 'react';
 
-import SubredditContext from './SubredditContext';
 import { DEFAULT_SUBREDDIT } from '../../../api/reddit';
+import SubredditContext from './SubredditContext';
 
 type SubredditProviderProps = {
   children: ReactNode;
